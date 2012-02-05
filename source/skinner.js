@@ -90,7 +90,7 @@
 	var tpl = {
 		r: function(){return (self.modifier||function(v){return v;})(arguments);},
 		i: function(k,i,t){return{key:k,index:i,total:t,number:i+1,last:i+1==t,first:i==0};},
-		e: function(d,c){var t,k,i=0;if(d.length){t=d.length;while(i<t){c(d[i],this.i(k,i,t));i++;}}else{t=this.t(d);for(k in d){if(d.hasOwnProperty(k)){c(d[k],this.i(k,i,t));i++;}}}},
+		e: function(d,c){var t,k,i=0;if(d.length){t=d.length;while(i<t){c(d[i],this.i(i,i,t));i++;}}else{t=this.t(d);for(k in d){if(d.hasOwnProperty(k)){c(d[k],this.i(k,i,t));i++;}}}},
 		t: function(o){var n=0;for(var k in o){if(o.hasOwnProperty(k)){n++;}}return n;}
 	};	
 	
