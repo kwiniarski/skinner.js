@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="../source/skinner.js"></script>
+		<script src="../source/skinner.modifiers.js"></script>
+
+		<script>
+			
+			
+			function TrackList(data) {
+				for(var i in data) {
+					this.push(data[i]);
+				}	
+				
+				this.hasBonusTracks = false;
+				this.getTrack = function(id) {
+					var i = this.length;
+					while(i--){
+						if(this[i].Id == id) {
+							return this[i];
+						}
+					}
+					return false;
+				};				
+			}
+
+			TrackList.prototype = [];
+			TrackList.prototype.constructor = TrackList;
+			
+			function Album(data) {
+				function zeroPad(number, pad) {
+					while(String(number).length < pad) {
+						number = '0' + number;
+					}
+					return number;
+				}
+				for(var i in data) {
+					if (i=='Tracks') {
+						this[i] = new TrackList(data[i]);
+					} else {
+						this[i] = data[i];
+					}
+				}				
+				this.getAlbumLength = function(){
+					return this.Tracks.length;
+				};
+				this.getAlbumTime = function(format){
+					var time = 0, i = this.getAlbumLength();
+					while(i--) {
+						time += this.Tracks[i].Length;
+					}
+					if (format) {
+						return this.formatTime(time, format);
+					}						
+					return time;
+				};
+				this.formatTime = function(time, format) {
+					return format
+						.replace('%m', zeroPad(Math.floor(time / 60), 2))
+						.replace('%s', zeroPad(time % 60, 2));
+				}
+			}
+			var tplJson = [
+				{
+					AlbumTitle: 'My Album',
+					AlbumComposer: 'Some Composer',
+					Tracks: [
+						{ Id: 1, Length: 240, Name: 'Test track', Composers: ['Me']},
+						{ Id: 2, Length: 180, Name: 'Another track'},
+						{ Id: 3, Length: 360, Name: 'Just track', Composers: ['Some One','Me'] }
+					]
+				},{
+					AlbumTitle: 'My New Album',
+					AlbumComposer: 'Another Composer',
+					Tracks: [
+						{ Id: 1, Length: 185, Name: 'Track one'},
+						{ Id: 2, Length: 300, Name: 'Track two', Composers: ['Some One','Me']},
+						{ Id: 3, Length: 155, Name: 'Track three'},
+						{ Id: 4, Length: 180, Name: 'Track four', Composers: ['Some One','You']}
+					]
+				}
+			];
+			var tplData = [new Album(tplJson[0]), new Album(tplJson[1])];
+			
+
+		</script>
+	</head>
+	<body>
+
+		<script type="text/plain" id="tplTemplate">
+			<style>
+				#AlbumList { font-family: Calibri,Arial,sans-serif; }
+			</style>
+			<h1>Album list</h1>
+			<div style="border: 1px solid #eee; background: #f7f7f7;padding: 1em;">
+				{foreach $tpl.Albums as $album}
+				{if !@first}<hr/>{/if}
+				{assign var=$Title value=$album.AlbumTitle}
+				<h2>{@number}) &quot;{$Title|upper|replace:'MY':'YOUR'}&quot; @first</h2>
+				<strong>by {$album.AlbumComposer}</strong><br/>
+				released: {$album.AlbumYear|default:"No data"|upper}<br/>
+				<p>Track list:</p>
+				<ol style="list-style-type: none; padding: 0; border: 1px solid #f0f0f0;">
+					{foreach $album.Tracks as $track}
+					<li style="background: #fff; padding: .5em;">
+						{$track.Id}. {$track.Name} ({$album.formatTime($track.Length,'%m:%s')})
+						{if $track.Composers}<br/><em>{foreach $track.Composers as $composer}{$composer}{if !@last},{/if}{/foreach}</em>{/if}
+					</li>
+					{/foreach}
+				</ol>
+				<p>
+					<small>Total time: {$album.getAlbumTime('%m:%s | ')|test:' - tested'}</small><br/>
+					<small>Total tracks: {$album.getAlbumLength()}</small>
+				</p>
+				{/foreach}
+			</div>
+		</script>
+		
+		<div id="AlbumList"></div>
+		
+	
+		<script>
+			window.onload = function(){
+				try {
+				
+	skinner.registerPlugin('test', function(v){
+		return this + v;
+	});
+				
+//					tpl.compile('tplTemplate');
+//					$('#AlbumList').html(tpl.render('tplTemplate', { Albums: tplData }));
+					var list = document.getElementById('AlbumList');
+					skinner.compile('tplTemplate');
+					list.innerHTML = skinner.fetch('tplTemplate', { Albums: tplData });
+//					tpl.compile('tplLotto');
+//					$('#Lotto').html(tpl.fetch('tplLotto', lotto));
+				} catch(error) {
+					console.log(error);
+				}
+				
+			};
+		</script>
+	</body>
+</html>
