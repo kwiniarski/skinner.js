@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>skinner.js - Test blocks</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script src="../lib/yuitest/javascript/build/yuitest/yuitest.js"></script>
+		<script src="../source/skinner.js"></script>
+		<script src="blocks.js"></script>
+		<script>
+			window.onload = function(){
+				YUITest.TestRunner.add(blocks);
+				YUITest.TestRunner.subscribe(YUITest.TestRunner.COMPLETE_EVENT, function(){
+					document.getElementById('results').innerHTML = YUITest.TestRunner.getResults(YUITest.TestFormat.TAP);
+				});
+				YUITest.TestRunner.run();
+			};
+		</script>
+		<style>
+			body {
+				font: normal 1em monospace;
+				white-space: pre;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>skinner.js - Test blocks</h1>
+		<div id="results"></div>
+	</body>
+</html>
