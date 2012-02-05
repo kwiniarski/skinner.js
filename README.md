@@ -40,13 +40,13 @@ easy to learn for others, how it integrates with your code editor and other
 tools). My observations about the last point are that smaller and faster 
 engines tend to be more complicated in their syntax. Those with "pretty" syntax 
 are little slower and bigger.
-**SkinnerJS is designed to meet the golden mean principle**.
+**skinner.js is designed to meet the golden mean principle**.
 
 ## Features
 
 * It is designed to be **small and fast** (precompiling templates is not enough);
-* PHP's Smarty syntax, so you can take an adventage of the editors with 
-**Smartys's syntax highlighting**;
+* Smarty for PHP syntax, so you can take an adventage of the editors with 
+**Smarty's syntax highlighting**;
 * **Extendable** with additional blocks and modifiers;
 * Does not use `with {...}` and `eval()`, as seen in other engines;
 
