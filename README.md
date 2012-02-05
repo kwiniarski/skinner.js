@@ -74,13 +74,16 @@ currently in);
 
 ### Data
 
-	var albums = [
-		{ "title": "My album", "composer": "Myself", "year": 2000, "single": true },
-		{ "title": "Your album", "composer": "You", "year": 2001 }
-	];
+~~~ js
+var albums = [
+	{ "title": "My album", "composer": "Myself", "year": 2000, "single": true },
+	{ "title": "Your album", "composer": "You", "year": 2001 }
+];
+~~~
 
 ### Template
 
+~~~ html
 	<script type="text/x-tpl" id="albums-template">
 		{foreach $tpl.albums as $album}
 			<li class="album">
@@ -93,12 +96,17 @@ currently in);
 	</script>
 
 	<ul id="albums-list"></ul>
+~~~
 
 ### Code
 
+~~~ js
 	skinner.compile('albums-template');
 	document.getElementById('albums-list').innerHTML = skinner.fetch('albums-template', {
 		"albums": albums
 	});
+~~~
 
 ## License
+
+See [LICENSE.txt]
