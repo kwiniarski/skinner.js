@@ -1,0 +1,6 @@
+[submodule "lib/benchmark.js"]
+	path = lib/benchmark.js
+	url = git://github.com/bestiejs/benchmark.js.git
+[submodule "lib/yuitest"]
+	path = lib/yuitest
+	url = git://github.com/yui/yuitest.git
