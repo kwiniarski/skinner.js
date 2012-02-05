@@ -83,7 +83,6 @@ var albums = [
 
 ### Template
 
-~~~ html
 	<script type="text/x-tpl" id="albums-template">
 		{foreach $tpl.albums as $album}
 			<li class="album">
@@ -96,7 +95,6 @@ var albums = [
 	</script>
 
 	<ul id="albums-list"></ul>
-~~~
 
 ### Code
 
@@ -109,4 +107,4 @@ var albums = [
 
 ## License
 
-See [LICENSE.txt]
+See LICENSE.txt
